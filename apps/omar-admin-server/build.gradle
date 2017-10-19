@@ -5,10 +5,10 @@ buildscript {
      dockerStatementsOverride = {
        [
           "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
-          "MAINTAINER DigitalGlobe-RadiantBlue",
-          """LABEL com.digitalglobe.version="" """,
+          "MAINTAINER Radiant Solutions",
+          """LABEL com.radiantsolutions.version="" """,
           "COPY ${project.name}-${buildVersion}-${buildVersionTag}.jar \$HOME/",
-          "EXPOSE 8082",
+          "EXPOSE 8080",
           "WORKDIR /home/omar",
           "CMD java -Xms256m -Xmx1024m -Dspring.profiles.active=production -Djava.security.egd=file:/dev/./urandom -Dserver.contextPath=/omar-admin-server -jar ./${project.name}-${buildVersion}-${buildVersionTag}.jar"
 
