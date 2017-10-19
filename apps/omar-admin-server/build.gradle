@@ -1,10 +1,29 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.7.RELEASE'
+     baseImage = "omar-base"
+     dockerStatementsOverride = {
+       [
+          "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
+          "MAINTAINER DigitalGlobe-RadiantBlue",
+          """LABEL com.digitalglobe.version="" """,
+          "COPY ${project.name}-${buildVersion}-${buildVersionTag}.jar \$HOME/",
+          "EXPOSE 8082",
+          "WORKDIR /home/omar",
+          "CMD java -Xms256m -Xmx1024m -Dspring.profiles.active=production -Djava.security.egd=file:/dev/./urandom -Dserver.contextPath=/omar-admin-server -jar ./${project.name}-${buildVersion}-${buildVersionTag}.jar"
+
+       ]
+     }
 	}
-	repositories {
-		mavenCentral()
-	}
+  if(System.env.OMAR_COMMON_PROPERTIES)
+  {
+      apply from: System.env.OMAR_COMMON_PROPERTIES
+  }
+   repositories {
+      mavenLocal()
+      maven { url "${ossimMavenProxy}" }
+      mavenCentral()
+   }
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
@@ -12,16 +31,23 @@ buildscript {
 
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
+//apply plugin: 'spring-boot'
+apply plugin: "java"
+apply plugin: "maven-publish"
+apply plugin: "maven"
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
-group = 'omar.admin'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+group 'omar.admin'
+
 
 repositories {
-	mavenCentral()
+  mavenLocal()
+  maven { url "${ossimMavenProxy}" }
+  mavenCentral()
 }
-
 
 ext {
 	springCloudVersion = 'Dalston.SR4'
@@ -30,15 +56,25 @@ ext {
 dependencies {
   compile group: 'de.codecentric', name: 'spring-boot-admin-server', version: '1.5.4'
   compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version: '1.5.4'
+  compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui-login', version: '1.5.4'
   compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.cloud:spring-cloud-starter-eureka')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.codehaus.groovy:groovy')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+  compile('org.springframework.boot:spring-boot-starter-security')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.cloud:spring-cloud-starter-eureka')
+  compile('org.codehaus.groovy:groovy')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+    }
+  }
 }

@@ -36,3 +36,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+out/
+
+apps/omar-admin-server/application.yml
