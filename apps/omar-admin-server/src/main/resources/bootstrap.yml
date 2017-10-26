@@ -1,26 +1,13 @@
 spring:
   application:
     name: omar-admin-server
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,hystrix.stream,turbine.stream
+      url: http://${HOST_NAME:localhost}:${server.port}
+      discovery:
+        converter.management-context-path: '/mgmt'
   cloud:
     config:
-      enabled: false
-      uri: http://localhost:8888/omar-config-server
-    discovery:
-      enabled: false
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-  client:
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
----
-spring:
-  profiles: production
-  cloud:
-    config:
-      uri: http://omar-config-server:8888/omar-config-server
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://omar-eureka-server:8761/omar-eureka-server/eureka/
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
