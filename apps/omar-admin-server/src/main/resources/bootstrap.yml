@@ -1,13 +1,13 @@
 spring:
   application:
     name: omar-admin-server
-  boot:
-    admin:
-      routes:
-        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,hystrix.stream,turbine.stream
-      url: http://${HOST_NAME:localhost}:${server.port}
-      discovery:
-        converter.management-context-path: '/mgmt'
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+  # boot:
+  #   admin:
+  #     routes:
+  #       endpoints: env,metrics,trace,info,configprops,trace,heapdump
+      # url: http://${HOST_NAME:localhost}:${server.port}
+      # discovery:
+      #   converter.management-context-path: '/mgmt'
+  # cloud:
+  #   config:
+  #     uri: ${CONFIG_SERVER_URL:http://localhost:8888}

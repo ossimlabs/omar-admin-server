@@ -1,21 +1,21 @@
----
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://${EUREKA_SERVER_URL:localhost}:8761/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-    metadataMap:
-      management:
-        contextPath: ${management.context-path}
----
-spring:
-  boot:
-    admin:
-      url: http://localhost:8082
+# ---
+# eureka:
+#   client:
+#     serviceUrl:
+#       defaultZone: http://${EUREKA_SERVER_URL:localhost}:8761/eureka/
+#   instance:
+#     leaseRenewalIntervalInSeconds: 1
+#     leaseExpirationDurationInSeconds: 2
+    # metadataMap:
+    #   management:
+    #     contextPath: ${management.context-path}
+# ---
+# spring:
+#   boot:
+#     admin:
+#       url: http://localhost:8082
 
-management:
-  contextPath: '/mgmt'
-  security:
-    enabled: false
+# management:
+#   contextPath: '/mgmt'
+#   security:
+#     enabled: false
