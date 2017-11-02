@@ -40,7 +40,7 @@ apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-group 'omar.admin'
+group 'io.ossim.omar'
 
 
 repositories {
