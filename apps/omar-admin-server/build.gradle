@@ -54,11 +54,10 @@ ext {
 }
 
 dependencies {
-  compile group: 'de.codecentric', name: 'spring-boot-admin-server', version: '1.5.4'
-  compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version: '1.5.4'
-  compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui-login', version: '1.5.4'
+  compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
+  compile('de.codecentric:spring-boot-admin-server:1.5.4')
+  compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
   compile('org.springframework.boot:spring-boot-starter-actuator')
-  compile('org.springframework.boot:spring-boot-starter-security')
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.cloud:spring-cloud-starter-eureka')
   compile('org.codehaus.groovy:groovy')
