@@ -21,26 +21,6 @@ View thread dump
 View traces
 Event journal of status changes (non persistent)
 
-## Dockerfile
-```
-FROM omar-base
-RUN mkdir /usr/share/omar
-COPY omar-admin-server-1.0.0-SNAPSHOT.jar /usr/share/omar
-RUN chown -R 1001:0 /usr/share/omar
-RUN chown 1001:0 /usr/share/omar
-RUN chmod -R g+rw /usr/share/omar
-RUN find $HOME -type d -exec chmod g+x {} +
-USER 1001
-WORKDIR /usr/share/omar
-VOLUME /dev/random /home /Users
-EXPOSE 8761
-CMD java -Xms256m -Xmx1024m -Dspring.profiles.active=production -Djava.security.egd=file:/dev/./urandom -Dserver.contextPath=/omar-admin-server -jar /usr/share/omar/omar-admin-server-1.0.0-SNAPSHOT.jar
-```
-Ref: [omar-base](../../../omar-base/docs/install-guide/omar-base/)
-
-## JAR
-[http://artifactory.ossim.io/artifactory/omar-local/omar/admin/omar-admin-server](http://artifactory.ossim.io/artifactory/omar-local/omar/admin/omar-admin-server)
-
 ## Installation in Openshift
 
 **Assumption:** The omar-admin-server docker image is pushed into the OpenShift server's internal docker registry and available to the project.
