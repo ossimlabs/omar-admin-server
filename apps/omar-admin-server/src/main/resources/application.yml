@@ -1,4 +1,4 @@
 ---
 # Set the context path for the application
-server:
-  contextPath: /omar-admin-server
+#server:
+#  contextPath: /omar-admin-server
