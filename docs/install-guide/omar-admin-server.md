@@ -1,8 +1,5 @@
 # OMAR Spring Boot Admin Server
 
-## Source Location
-https://github.com/ossimlabs/omar-admin-server
-
 ## Purpose
 The Spring Boot Admin Server provides a Spring Framework discovery client for all OMAR services. This discovery client is utilized for a variety of routing, metrics, and aggregation tasks.
 
