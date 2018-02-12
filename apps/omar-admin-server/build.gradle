@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.7.RELEASE'
+		springBootVersion = '1.5.9.RELEASE'
      baseImage = "omar-base"
      dockerStatementsOverride = {
        [
@@ -24,6 +24,9 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
+}
+plugins {
+  id "com.github.ben-manes.versions" version "0.17.0"
 }
 
 apply plugin: 'groovy'
@@ -51,9 +54,9 @@ ext {
 }
 
 dependencies {
-  compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
-  compile('de.codecentric:spring-boot-admin-server:1.5.4')
-  compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
+  compile('de.codecentric:spring-boot-admin-starter-client:1.5.7')
+  compile('de.codecentric:spring-boot-admin-server:1.5.7')
+  compile('de.codecentric:spring-boot-admin-server-ui:1.5.7')
   compile('org.springframework.boot:spring-boot-starter-actuator')
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.cloud:spring-cloud-starter-eureka')
