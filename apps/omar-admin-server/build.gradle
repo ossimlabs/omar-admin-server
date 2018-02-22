@@ -1,6 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
+  ext {
+    baseImage = "omar-base"
+  }
+  if(System.env.OMAR_COMMON_PROPERTIES)
+  {
+    apply from: System.env.OMAR_COMMON_PROPERTIES
+  }
+  ext {
+   springBootVersion = "${springBootV}"
      baseImage = "omar-base"
      dockerStatementsOverride = {
        [
@@ -12,11 +19,7 @@ buildscript {
        ]
      }
 	}
-  if(System.env.OMAR_COMMON_PROPERTIES)
-  {
-      apply from: System.env.OMAR_COMMON_PROPERTIES
-  }
-   repositories {
+  repositories {
       mavenLocal()
       maven { url "${ossimMavenProxy}" }
       mavenCentral()
@@ -25,13 +28,13 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
+
 plugins {
   id "com.github.ben-manes.versions" version "0.17.0"
 }
 
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
-//apply plugin: 'spring-boot'
 apply plugin: "java"
 apply plugin: "maven-publish"
 apply plugin: "maven"
@@ -49,14 +52,10 @@ repositories {
   mavenCentral()
 }
 
-ext {
-	springCloudVersion = 'Dalston.SR5'
-}
-
 dependencies {
-  compile('de.codecentric:spring-boot-admin-starter-client:1.5.7')
-  compile('de.codecentric:spring-boot-admin-server:1.5.7')
-  compile('de.codecentric:spring-boot-admin-server-ui:1.5.7')
+  compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
+  compile('de.codecentric:spring-boot-admin-server:1.5.4')
+  compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
   compile('org.springframework.boot:spring-boot-starter-actuator')
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.cloud:spring-cloud-starter-eureka')
@@ -66,7 +65,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudDependencyV}"
 	}
 }
 
