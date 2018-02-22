@@ -1,6 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.7.RELEASE'
+  ext {
+    baseImage = "omar-base"
+  }
+  if(System.env.OMAR_COMMON_PROPERTIES)
+  {
+    apply from: System.env.OMAR_COMMON_PROPERTIES
+  }
+  ext {
+   springBootVersion = "${springBootV}"
      baseImage = "omar-base"
      dockerStatementsOverride = {
        [
@@ -12,11 +19,7 @@ buildscript {
        ]
      }
 	}
-  if(System.env.OMAR_COMMON_PROPERTIES)
-  {
-      apply from: System.env.OMAR_COMMON_PROPERTIES
-  }
-   repositories {
+  repositories {
       mavenLocal()
       maven { url "${ossimMavenProxy}" }
       mavenCentral()
@@ -26,9 +29,12 @@ buildscript {
 	}
 }
 
+plugins {
+  id "com.github.ben-manes.versions" version "0.17.0"
+}
+
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
-//apply plugin: 'spring-boot'
 apply plugin: "java"
 apply plugin: "maven-publish"
 apply plugin: "maven"
@@ -47,7 +53,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Dalston.SR4'
+	springCloudVersion = 'Dalston.SR5'
 }
 
 dependencies {
