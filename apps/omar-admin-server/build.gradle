@@ -1,15 +1,7 @@
 buildscript {
   ext {
     baseImage = "omar-base"
-  }
-  if(System.env.OMAR_COMMON_PROPERTIES)
-  {
-    apply from: System.env.OMAR_COMMON_PROPERTIES
-  }
-  ext {
-   springBootVersion = "${springBootV}"
-     baseImage = "omar-base"
-     dockerStatementsOverride = {
+    dockerStatementsOverride = {
        [
           "FROM ${project.dockerNamespaceUrl}${project.ext.baseImage}:${project.dockerAppTag}",
           "COPY ${project.name}-${buildVersion}-${buildVersionTag}.jar \$HOME/",
@@ -18,7 +10,17 @@ buildscript {
           "CMD java -Xms256m -Xmx1024m -Dspring.profiles.active=production -Djava.security.egd=file:/dev/./urandom -Dserver.contextPath=/omar-admin-server -jar ./${project.name}-${buildVersion}-${buildVersionTag}.jar"
        ]
      }
+  }
+  
+  if(System.env.OMAR_COMMON_PROPERTIES)
+  {
+    apply from: System.env.OMAR_COMMON_PROPERTIES
+  }
+  
+  ext {
+   springBootVersion = "${springBootV}"
 	}
+  
   repositories {
       mavenLocal()
       maven { url "${ossimMavenProxy}" }
