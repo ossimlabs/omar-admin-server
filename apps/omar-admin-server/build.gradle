@@ -11,20 +11,22 @@ buildscript {
        ]
      }
   }
-  
+
   if(System.env.OMAR_COMMON_PROPERTIES)
   {
     apply from: System.env.OMAR_COMMON_PROPERTIES
   }
-  
+
   ext {
    springBootVersion = "${springBootV}"
 	}
-  
+
   repositories {
-      mavenLocal()
       maven { url "${ossimMavenProxy}" }
-      mavenCentral()
+      if( Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
+        mavenLocal()
+        mavenCentral()
+      }
    }
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -49,9 +51,11 @@ group 'io.ossim.omar'
 
 
 repositories {
-  mavenLocal()
   maven { url "${ossimMavenProxy}" }
-  mavenCentral()
+  if( Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
+    mavenLocal()
+    mavenCentral()
+  }
 }
 
 dependencies {
