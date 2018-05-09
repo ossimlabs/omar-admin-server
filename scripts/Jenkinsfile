@@ -12,7 +12,7 @@
 def notifyObj
 
 // TODO: get to run on any node
-node("slave"){
+node(""){
     def workspaceDir = pwd()
     def appName = "omar-admin-server"
     def omarCommonProjName = "omar-common"
