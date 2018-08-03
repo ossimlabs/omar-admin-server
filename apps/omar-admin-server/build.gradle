@@ -22,9 +22,9 @@ buildscript {
 	}
 
   repositories {
+      mavenLocal()
       maven { url "${ossimMavenProxy}" }
       if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-        mavenLocal()
         mavenCentral()
       }
    }
@@ -34,7 +34,6 @@ buildscript {
 }
 
 plugins {
-    id "com.github.ben-manes.versions" version "0.17.0"
     id "org.sonarqube" version "2.6.2"
 }
 
@@ -52,9 +51,9 @@ group 'io.ossim.omar'
 
 
 repositories {
+  mavenLocal()
   maven { url "${ossimMavenProxy}" }
   if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-    mavenLocal()
     mavenCentral()
   }
 }
