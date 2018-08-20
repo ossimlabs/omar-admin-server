@@ -22,9 +22,9 @@ buildscript {
 	}
 
   repositories {
+      mavenLocal()
       maven { url "${ossimMavenProxy}" }
       if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-        mavenLocal()
         mavenCentral()
       }
    }
@@ -52,9 +52,9 @@ group 'io.ossim.omar'
 
 
 repositories {
+  mavenLocal()
   maven { url "${ossimMavenProxy}" }
   if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-    mavenLocal()
     mavenCentral()
   }
 }
