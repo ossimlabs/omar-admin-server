@@ -15,9 +15,6 @@ buildscript {
   repositories {
       mavenLocal()
       maven { url "${ossimMavenProxy}" }
-      if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-        mavenCentral()
-      }
    }
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -45,9 +42,6 @@ group 'io.ossim.omar'
 repositories {
   mavenLocal()
   maven { url "${ossimMavenProxy}" }
-  if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-    mavenCentral()
-  }
 }
 
 dependencies {
