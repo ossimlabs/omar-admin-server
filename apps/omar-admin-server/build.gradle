@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-  compile "io.ossim.omar.plugins:omar-core-plugin:+"
+  compile "io.ossim.omar.plugins:omar-core-plugin:${latestGradleIdentifier}"
   compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
   compile('de.codecentric:spring-boot-admin-server:1.5.4')
   compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
