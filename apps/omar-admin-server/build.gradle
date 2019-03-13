@@ -1,27 +1,13 @@
 buildscript {
-  ext {
-    baseImage = "omar-base"
-  }
-
-  if(System.env.OMAR_COMMON_PROPERTIES)
-  {
-    apply from: System.env.OMAR_COMMON_PROPERTIES
-  }
-
-  ext {
-   springBootVersion = "${springBootV}"
-	}
-
   repositories {
-      mavenLocal()
-      maven { url "${ossimMavenProxy}" }
-      if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-        mavenCentral()
-      }
-   }
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    mavenLocal()
+    maven { url ossimMavenProxy }
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
+    classpath 'com.bmuschko:gradle-docker-plugin:3.0.12'
+    classpath 'io.ossim:gradleDefaults:1.6-SNAPSHOT'
+  }
 }
 
 plugins {
@@ -32,25 +18,28 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: "java"
-apply plugin: "maven-publish"
 apply plugin: "maven"
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
+io.ossim.gradleDefaults.Variables.setAdditionalVariables(project)
+io.ossim.gradleDefaults.Variables.setVersionVariables(project)
+dockerBuildDir="${rootProject.projectDir}/docker"
+version "${buildVersion}-${buildVersionTag}"
+jarDestination = "${projectDir}/build/libs/${project.name}-${version}.jar"
+io.ossim.gradleDefaults.Docker.addDockerTasks(project, dockerRegistryUrl, dockerRegistryUsername, dockerRegistryPassword, name, dockerImageTag, dockerBuildDir, jarDestination, ["BASE_IMAGE": "${dockerRegistryUrl}/${dockerBaseImage}"])
+io.ossim.gradleDefaults.Openshift.addOpenshiftTasks(project, openshiftUrl, openshiftUsername, openshiftPassword, openshiftProjectName, openshiftServiceName,  dockerRegistryUrl, name, dockerImageTag)
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-group 'io.ossim.omar'
-
 
 repositories {
   mavenLocal()
-  maven { url "${ossimMavenProxy}" }
-  if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
-    mavenCentral()
-  }
+  maven { url ossimMavenProxy }
 }
 
 dependencies {
+  compile "io.ossim.omar.plugins:omar-core-plugin:${latestGradleIdentifier}"
   compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
   compile('de.codecentric:spring-boot-admin-server:1.5.4')
   compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
@@ -65,12 +54,4 @@ dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudDependencyV}"
 	}
-}
-
-publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      from components.java
-    }
-  }
 }
