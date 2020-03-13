@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-  compile "io.ossim.omar.plugins:omar-core-plugin:+"
+  // compile "io.ossim.omar.plugins:omar-core-plugin:+"
   compile('de.codecentric:spring-boot-admin-starter-client:1.5.4')
   compile('de.codecentric:spring-boot-admin-server:1.5.4')
   compile('de.codecentric:spring-boot-admin-server-ui:1.5.4')
@@ -47,6 +47,7 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-web')
   compile('org.springframework.cloud:spring-cloud-starter-eureka')
   compile('org.codehaus.groovy:groovy')
+  
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
