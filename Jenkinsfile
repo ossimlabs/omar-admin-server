@@ -80,6 +80,21 @@ podTemplate(
         }
       }
     }
+        stage('Package chart'){
+      container('helm') {
+        sh """
+            mkdir packaged-chart
+            helm package -d packaged-chart chart
+          """
+      }
+    }
+    stage('Upload chart'){
+      container('builder') {
+        withCredentials([usernameColonPassword(credentialsId: 'helmCredentials', variable: 'HELM_CREDENTIALS')]) {
+          sh "curl -u ${HELM_CREDENTIALS} ${HELM_UPLOAD_URL} --upload-file packaged-chart/*.tgz -v"
+        }
+      }
+    }
     stage("Clean Workspace"){
       if ("${CLEAN_WORKSPACE}" == "true")
         step([$class: 'WsCleanup'])

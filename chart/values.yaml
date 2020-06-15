@@ -1,0 +1,79 @@
+# Default values for omar-admin-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicas: 1
+
+appName: omar-admin-server
+
+global:
+  dockerRepository: nexus-docker-private-group.ossim.io
+  imagePullSecret:
+    registry: null
+    username: null
+    password: null
+  hostname: omar-dev.ossim.io
+
+  createIngress: true
+  useTls: false
+  useTLSClientAuth: false
+  sslCertSecretName: null
+  authSslCertSecretName: null
+
+  createImagePullSecret: true
+  useImagePullSecret: true
+  
+  createHpa: true
+
+  useSpringConfigServer: false
+
+# These variables can be overridden because of the use of the 'pluck' function:
+# - createIngress
+# - useTls
+# - useTlsClientAuth
+# - createImagePullSecret
+# - createHpa
+# - createPVs
+# - useSpringConfigServer
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1000Mi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+livenessProbe:
+  failureThreshold: 5
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 380
+
+readinessProbe:
+  failureThreshold: 15
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+  path: /omar-admin-server/
+
+
+image:
+  name: omar-admin-server
+  tag: dev
+  pullPolicy: Always
+
+ingressPath: /omar-admin-server
+internalPort: 8080
+externalPort: 8080
+
+terminationGracePeriodSeconds: 30
+
+envVars:
+  SECURITY_USER_NAME: omar
+  SECURITY_USER_PASSWORD: omarftw123
+  SPRING_CLOUD_CONFIG_LABEL: master
+  SPRING_CLOUD_DISCOVERY_ENABLED: true
+  JAVA_OPTS: "-server -Xms256m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XX:+CMSClassUnloadingEnabled -XX:+UseGCOverheadLimit -Djava.awt.headless=true -XshowSettings:vm -Djava.security.egd=file:/dev/./urandom"
